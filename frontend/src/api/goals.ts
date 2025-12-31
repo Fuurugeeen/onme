@@ -1,34 +1,14 @@
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useMutation } from '@tanstack/react-query'
 import { useGoalStore } from '@/stores/goal'
 import type { Goal, GoalCreate, GoalUpdate } from '@/types'
 
 // Note: Backend API for goals is not yet implemented
 // Using local store with persist middleware for now
+// Goals are accessed directly via useGoalStore
 
 const generateId = () => crypto.randomUUID()
 
-export const useGoals = () => {
-  const { goals } = useGoalStore()
-
-  return useQuery({
-    queryKey: ['goals'],
-    queryFn: async () => goals,
-    initialData: goals,
-  })
-}
-
-export const useGoal = (id: string) => {
-  const { goals } = useGoalStore()
-
-  return useQuery({
-    queryKey: ['goals', id],
-    queryFn: async () => goals.find((g) => g.id === id) ?? null,
-    initialData: goals.find((g) => g.id === id) ?? null,
-  })
-}
-
 export const useCreateGoal = () => {
-  const queryClient = useQueryClient()
   const { addGoal } = useGoalStore()
 
   return useMutation({
@@ -45,14 +25,10 @@ export const useCreateGoal = () => {
       addGoal(goal)
       return goal
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['goals'] })
-    },
   })
 }
 
 export const useUpdateGoal = () => {
-  const queryClient = useQueryClient()
   const { updateGoal } = useGoalStore()
 
   return useMutation({
@@ -63,22 +39,15 @@ export const useUpdateGoal = () => {
       if (!updated) throw new Error('Goal not found')
       return updated
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['goals'] })
-    },
   })
 }
 
 export const useDeleteGoal = () => {
-  const queryClient = useQueryClient()
   const { deleteGoal } = useGoalStore()
 
   return useMutation({
     mutationFn: async (id: string): Promise<void> => {
       deleteGoal(id)
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['goals'] })
     },
   })
 }

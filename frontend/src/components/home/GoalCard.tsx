@@ -3,8 +3,8 @@ import { ProgressBar } from '@/components/ui/ProgressBar'
 
 interface GoalCardProps {
   title: string
-  progress: number
-  daysRemaining: number
+  progress?: number
+  daysRemaining?: number
 }
 
 export function GoalCard({ title, progress, daysRemaining }: GoalCardProps) {
@@ -15,13 +15,17 @@ export function GoalCard({ title, progress, daysRemaining }: GoalCardProps) {
           <span className="text-lg">🎯</span>
           <h3 className="font-semibold">{title}</h3>
         </div>
-        <div className="mt-3 flex items-center gap-3">
-          <ProgressBar value={progress} className="flex-1" />
-          <span className="text-sm font-medium">{progress}%</span>
-        </div>
-        <p className="mt-2 text-sm text-muted-foreground">
-          残り {daysRemaining}日
-        </p>
+        {progress !== undefined && (
+          <div className="mt-3 flex items-center gap-3">
+            <ProgressBar value={progress} className="flex-1" />
+            <span className="text-sm font-medium">{progress}%</span>
+          </div>
+        )}
+        {daysRemaining !== undefined && (
+          <p className="mt-2 text-sm text-muted-foreground">
+            残り {daysRemaining}日
+          </p>
+        )}
       </CardContent>
     </Card>
   )

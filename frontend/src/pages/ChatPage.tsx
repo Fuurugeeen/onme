@@ -8,6 +8,7 @@ import type { Message } from '@/types'
 
 export function ChatPage() {
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const initCalledRef = useRef(false)
   const [error, setError] = useState<string | null>(null)
   const [isInitializing, setIsInitializing] = useState(false)
   const {
@@ -23,8 +24,38 @@ export function ChatPage() {
   const sendMessage = useSendMessage()
   const startConversation = useStartConversation()
 
-  const initConversation = async () => {
-    if (conversationId) return
+  // Start a new conversation on mount if none exists
+  useEffect(() => {
+    const initConversation = async () => {
+      // Check store directly to avoid stale closure
+      const currentConversationId = useConversationStore.getState().conversationId
+      if (currentConversationId) return
+
+      try {
+        setIsInitializing(true)
+        setError(null)
+        const conversation = await startConversation.mutateAsync('daily')
+        setConversationId(conversation.id)
+        if (conversation.messages && conversation.messages.length > 0) {
+          setMessages(conversation.messages)
+        }
+      } catch {
+        setError('会話の開始に失敗しました。')
+      } finally {
+        setIsInitializing(false)
+      }
+    }
+
+    if (!initCalledRef.current) {
+      initCalledRef.current = true
+      initConversation()
+    }
+  }, [startConversation, setConversationId, setMessages])
+
+  // Retry function for error recovery
+  const retryInitConversation = async () => {
+    const currentConversationId = useConversationStore.getState().conversationId
+    if (currentConversationId) return
 
     try {
       setIsInitializing(true)
@@ -41,12 +72,6 @@ export function ChatPage() {
     }
   }
 
-  // Start a new conversation on mount if none exists
-  useEffect(() => {
-    initConversation()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -54,6 +79,9 @@ export function ChatPage() {
 
   const handleSend = async (content: string) => {
     setError(null)
+
+    // Save current messages before optimistic update
+    const previousMessages = [...messages]
 
     // Add user message optimistically
     const userMessage: Message = {
@@ -81,7 +109,7 @@ export function ChatPage() {
       addMessage(response.message)
     } catch {
       // Remove failed message and show error
-      setMessages(messages)
+      setMessages(previousMessages)
       setError('メッセージの送信に失敗しました。')
     } finally {
       setLoading(false)
@@ -99,7 +127,7 @@ export function ChatPage() {
               {!conversationId && (
                 <button
                   type="button"
-                  onClick={initConversation}
+                  onClick={retryInitConversation}
                   className="mt-2 text-primary underline hover:no-underline"
                 >
                   再試行

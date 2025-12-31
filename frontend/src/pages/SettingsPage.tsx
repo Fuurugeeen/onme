@@ -2,26 +2,16 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { User, Target, MessageSquare, Lightbulb, LogOut, ChevronRight } from 'lucide-react'
 import { useAuthStore } from '@/stores/auth'
+import { useGoalStore } from '@/stores/goal'
 import { signOut } from '@/api/auth'
 import { Card } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
 
-// モックデータ（後でAPIから取得）
-const mockConversations = [
-  { id: '1', date: '12/30', title: '振り返り' },
-  { id: '2', date: '12/29', title: '目標確認' },
-  { id: '3', date: '12/28', title: '週間レビュー' },
-]
-
-const mockGoal: { title: string } | null = {
-  title: 'TOEIC 800点',
-}
-
-const mockInsightsCount = 12
-
 export function SettingsPage() {
   const navigate = useNavigate()
   const user = useAuthStore((state) => state.user)
+  const { goals } = useGoalStore()
+  const currentGoal = goals[0]
   const [isLoggingOut, setIsLoggingOut] = useState(false)
 
   const handleLogout = async () => {
@@ -60,7 +50,7 @@ export function SettingsPage() {
         <Link to="/goal-setup">
           <Card className="p-4 flex items-center justify-between hover:bg-accent transition-colors">
             <span className="text-sm">
-              {mockGoal?.title || '目標を設定する'}
+              {currentGoal?.title || '目標を設定する'}
             </span>
             <ChevronRight className="h-4 w-4 text-muted-foreground" />
           </Card>
@@ -73,25 +63,10 @@ export function SettingsPage() {
           <MessageSquare className="h-4 w-4" />
           <span className="text-sm font-medium">過去の会話</span>
         </div>
-        <Card className="divide-y">
-          {mockConversations.length > 0 ? (
-            mockConversations.map((conv) => (
-              <button
-                type="button"
-                key={conv.id}
-                className="w-full p-4 flex items-center justify-between hover:bg-accent transition-colors text-left"
-              >
-                <span className="text-sm">
-                  {conv.date} {conv.title}
-                </span>
-                <ChevronRight className="h-4 w-4 text-muted-foreground" />
-              </button>
-            ))
-          ) : (
-            <p className="p-4 text-sm text-muted-foreground">
-              まだ会話がありません
-            </p>
-          )}
+        <Card className="p-4">
+          <span className="text-sm text-muted-foreground">
+            まだ会話がありません
+          </span>
         </Card>
       </section>
 
@@ -101,18 +76,11 @@ export function SettingsPage() {
           <Lightbulb className="h-4 w-4" />
           <span className="text-sm font-medium">気づき一覧</span>
         </div>
-        <button type="button" className="w-full">
-          <Card className="p-4 flex items-center justify-between hover:bg-accent transition-colors">
-            <span className="text-sm">
-              {mockInsightsCount > 0
-                ? `${mockInsightsCount}件の気づき`
-                : 'まだ気づきがありません'}
-            </span>
-            {mockInsightsCount > 0 && (
-              <ChevronRight className="h-4 w-4 text-muted-foreground" />
-            )}
-          </Card>
-        </button>
+        <Card className="p-4">
+          <span className="text-sm text-muted-foreground">
+            まだ気づきがありません
+          </span>
+        </Card>
       </section>
 
       {/* ログアウト */}

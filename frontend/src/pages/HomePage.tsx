@@ -5,24 +5,26 @@ import { CoachingCTA } from '@/components/home/CoachingCTA'
 import { InsightsList } from '@/components/home/InsightsList'
 import { Card, CardContent } from '@/components/ui/Card'
 import { Button } from '@/components/ui/Button'
+import { useGoalStore } from '@/stores/goal'
 
 // TODO: APIから取得するように変更
-const mockGoal: {
-  title: string
-  progress: number
-  daysRemaining: number
-} | null = {
-  title: 'TOEIC 800点',
-  progress: 65,
-  daysRemaining: 42,
-}
-
 const mockStreakDays = 12
 
 const mockInsights = [
   { id: '1', text: '朝の時間が集中できる' },
   { id: '2', text: '週末まとめは続かない' },
 ]
+
+function calculateDaysRemaining(deadline?: string): number | null {
+  if (!deadline) return null
+  // Compare dates only (ignore time) to avoid timezone issues
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const deadlineDate = new Date(deadline + 'T00:00:00')
+  const diffTime = deadlineDate.getTime() - today.getTime()
+  const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24))
+  return diffDays >= 0 ? diffDays : 0
+}
 
 function GoalSetupPrompt() {
   const navigate = useNavigate()
@@ -50,13 +52,16 @@ function GoalSetupPrompt() {
 }
 
 export function HomePage() {
+  const { goals } = useGoalStore()
+  const currentGoal = goals[0] // 最初の目標を表示
+  const daysRemaining = calculateDaysRemaining(currentGoal?.deadline)
+
   return (
     <div className="space-y-6 p-4">
-      {mockGoal ? (
+      {currentGoal ? (
         <GoalCard
-          title={mockGoal.title}
-          progress={mockGoal.progress}
-          daysRemaining={mockGoal.daysRemaining}
+          title={currentGoal.title}
+          daysRemaining={daysRemaining ?? undefined}
         />
       ) : (
         <GoalSetupPrompt />
