@@ -1,6 +1,6 @@
 import { Card, CardContent } from '@/components/ui/Card'
 
-interface Insight {
+export interface Insight {
   id: string
   text: string
 }

@@ -21,6 +21,7 @@ export function SettingsPage() {
       navigate('/login')
     } catch (error) {
       console.error('ログアウトに失敗しました:', error)
+    } finally {
       setIsLoggingOut(false)
     }
   }

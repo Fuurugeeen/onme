@@ -85,7 +85,7 @@ export function ChatPage() {
 
     // Add user message optimistically
     const userMessage: Message = {
-      id: `temp-${Date.now()}`,
+      id: crypto.randomUUID(),
       role: 'user',
       content,
       created_at: new Date().toISOString(),

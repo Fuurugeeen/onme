@@ -1,7 +1,7 @@
 import { Card, CardContent } from '@/components/ui/Card'
 import { ProgressBar } from '@/components/ui/ProgressBar'
 
-interface GoalCardProps {
+export interface GoalCardProps {
   title: string
   progress?: number
   daysRemaining?: number

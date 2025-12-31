@@ -1,10 +1,8 @@
-import { useNavigate } from 'react-router-dom'
 import { GoalCard } from '@/components/home/GoalCard'
 import { StreakBadge } from '@/components/home/StreakBadge'
 import { CoachingCTA } from '@/components/home/CoachingCTA'
 import { InsightsList } from '@/components/home/InsightsList'
-import { Card, CardContent } from '@/components/ui/Card'
-import { Button } from '@/components/ui/Button'
+import { GoalSetupPrompt } from '@/components/home/GoalSetupPrompt'
 import { useGoalStore } from '@/stores/goal'
 
 // TODO: APIから取得するように変更
@@ -24,31 +22,6 @@ function calculateDaysRemaining(deadline?: string): number | null {
   const diffTime = deadlineDate.getTime() - today.getTime()
   const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24))
   return diffDays >= 0 ? diffDays : 0
-}
-
-function GoalSetupPrompt() {
-  const navigate = useNavigate()
-
-  return (
-    <Card>
-      <CardContent className="p-4">
-        <div className="flex items-center gap-2">
-          <span className="text-lg">🎯</span>
-          <h3 className="font-semibold">目標を設定しよう</h3>
-        </div>
-        <p className="mt-2 text-sm text-muted-foreground">
-          目標を設定すると、コーチングがより効果的になります
-        </p>
-        <Button
-          className="mt-4 w-full"
-          variant="outline"
-          onClick={() => navigate('/goal-setup')}
-        >
-          目標を設定する
-        </Button>
-      </CardContent>
-    </Card>
-  )
 }
 
 export function HomePage() {
