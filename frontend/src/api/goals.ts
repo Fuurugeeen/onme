@@ -33,9 +33,7 @@ export const useUpdateGoal = () => {
 
   return useMutation({
     mutationFn: async ({ id, data }: { id: string; data: GoalUpdate }): Promise<Goal> => {
-      updateGoal(id, data)
-      const { goals } = useGoalStore.getState()
-      const updated = goals.find((g) => g.id === id)
+      const updated = updateGoal(id, data)
       if (!updated) throw new Error('Goal not found')
       return updated
     },

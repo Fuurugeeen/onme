@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
+import { Textarea } from '@/components/ui/Textarea'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/Card'
 import type { GoalCreate } from '@/types'
 
@@ -31,9 +32,7 @@ export function GoalForm({ onSubmit, onSkip, isLoading, error }: GoalFormProps) 
     <Card className="mx-auto w-full max-w-md">
       <CardHeader>
         <CardTitle>目標を設定しよう</CardTitle>
-        <CardDescription>
-          達成したい目標を設定して、コーチと一緒に進めましょう
-        </CardDescription>
+        <CardDescription>達成したい目標を設定して、コーチと一緒に進めましょう</CardDescription>
       </CardHeader>
       <CardContent>
         {error && (
@@ -52,6 +51,7 @@ export function GoalForm({ onSubmit, onSkip, isLoading, error }: GoalFormProps) 
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               required
+              disabled={isLoading}
             />
           </div>
 
@@ -59,9 +59,8 @@ export function GoalForm({ onSubmit, onSkip, isLoading, error }: GoalFormProps) 
             <label htmlFor="description" className="text-sm font-medium">
               詳細（任意）
             </label>
-            <textarea
+            <Textarea
               id="description"
-              className="flex min-h-[80px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               placeholder="目標の詳細や達成するための具体的なアクションなど"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -78,6 +77,7 @@ export function GoalForm({ onSubmit, onSkip, isLoading, error }: GoalFormProps) 
               type="date"
               value={deadline}
               onChange={(e) => setDeadline(e.target.value)}
+              disabled={isLoading}
             />
           </div>
 

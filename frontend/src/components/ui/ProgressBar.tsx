@@ -7,12 +7,7 @@ interface ProgressBarProps {
   showLabel?: boolean
 }
 
-export function ProgressBar({
-  value,
-  max = 100,
-  className,
-  showLabel = false,
-}: ProgressBarProps) {
+export function ProgressBar({ value, max = 100, className, showLabel = false }: ProgressBarProps) {
   const percentage = Math.min(Math.max((value / max) * 100, 0), 100)
 
   return (
@@ -24,9 +19,7 @@ export function ProgressBar({
         />
       </div>
       {showLabel && (
-        <span className="mt-1 text-sm text-muted-foreground">
-          {Math.round(percentage)}%
-        </span>
+        <span className="mt-1 text-sm text-muted-foreground">{Math.round(percentage)}%</span>
       )}
     </div>
   )

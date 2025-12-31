@@ -16,8 +16,7 @@ export const useConversationStore = create<ConversationState>((set) => ({
   messages: [],
   isLoading: false,
   conversationId: null,
-  addMessage: (message) =>
-    set((state) => ({ messages: [...state.messages, message] })),
+  addMessage: (message) => set((state) => ({ messages: [...state.messages, message] })),
   setMessages: (messages) => set({ messages }),
   setLoading: (isLoading) => set({ isLoading }),
   setConversationId: (conversationId) => set({ conversationId }),

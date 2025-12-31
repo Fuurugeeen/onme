@@ -16,7 +16,7 @@ export function ChatLayout({ children, title = 'コーチング' }: ChatLayoutPr
       <header className="flex shrink-0 items-center border-b bg-white px-4 py-3">
         <button
           type="button"
-          onClick={() => navigate('/')}
+          onClick={() => navigate(-1)}
           className="flex items-center text-muted-foreground hover:text-foreground"
         >
           <ArrowLeft className="mr-2 h-5 w-5" />

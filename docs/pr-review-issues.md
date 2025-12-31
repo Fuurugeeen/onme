@@ -407,17 +407,17 @@ module.exports = {
 
 ## 対応チェックリスト
 
-- [ ] **Critical #1:** ChatPage.tsx - ロールバック処理のバグ修正
-- [ ] **High #2:** ChatPage.tsx - useEffectの依存関係修正
-- [ ] **High #3:** ChatPage.tsx - crypto.randomUUID()への変更
-- [ ] **High #4:** SettingsPage.tsx - 未実装ボタンのdisabled化
-- [ ] **High #5:** stores/goal.ts - updateGoalのリファクタリング
-- [ ] **Medium #6:** GoalCard.tsx, InsightsList.tsx - 型のエクスポート
-- [ ] **Medium #7:** HomePage.tsx - GoalSetupPromptの分離
-- [ ] **Medium #8:** ChatLayout.tsx - navigate(-1)への変更
-- [ ] **Medium #9:** SettingsPage.tsx - handleLogoutのfinally追加
-- [ ] **Medium #10:** types/index.ts - 型定義の共通化
-- [ ] **Medium #11:** api/goals.ts - キャッシュ直接更新
-- [ ] **Medium #12:** GoalForm.tsx - 入力フィールドのdisabled
-- [ ] **Medium #13:** Textarea.tsx - コンポーネント作成
-- [ ] **Medium #14:** .eslintrc.cjs - ESLint設定強化
+- [x] **Critical #1:** ChatPage.tsx - ロールバック処理のバグ修正（既に修正済み: `previousMessages`を使用）
+- [x] **High #2:** ChatPage.tsx - useEffectの依存関係修正（既に修正済み: useEffect内に関数を移動、`initCalledRef`使用）
+- [x] **High #3:** ChatPage.tsx - crypto.randomUUID()への変更
+- [x] **High #4:** SettingsPage.tsx - 未実装ボタンのdisabled化（対応不要: 現在のコードではボタンではなくCardでテキスト表示のみ）
+- [x] **High #5:** stores/goal.ts - updateGoalのリファクタリング
+- [x] **Medium #6:** GoalCard.tsx, InsightsList.tsx - 型のエクスポート
+- [x] **Medium #7:** HomePage.tsx - GoalSetupPromptの分離（`GoalSetupPrompt.tsx`として切り出し）
+- [x] **Medium #8:** ChatLayout.tsx - navigate(-1)への変更
+- [x] **Medium #9:** SettingsPage.tsx - handleLogoutのfinally追加
+- [x] **Medium #10:** types/index.ts - 型定義の共通化（対応不要: 現在のSettingsPageにモックデータがない）
+- [x] **Medium #11:** api/goals.ts - キャッシュ直接更新（対応不要: バックエンドAPIがないためストア直接使用）
+- [x] **Medium #12:** GoalForm.tsx - 入力フィールドのdisabled
+- [x] **Medium #13:** Textarea.tsx - コンポーネント作成（`Textarea.tsx`を新規作成、GoalFormで使用）
+- [x] **Medium #14:** .eslintrc.cjs - ESLint設定強化（`plugin:react/recommended`と`plugin:react/jsx-runtime`を追加、`eslint-plugin-react`をpackage.jsonに追加）
