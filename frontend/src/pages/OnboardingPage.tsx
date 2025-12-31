@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { ChatMessage } from '@/components/chat/ChatMessage'
 import { ChatInput } from '@/components/chat/ChatInput'
@@ -10,6 +10,7 @@ import type { Message } from '@/types'
 export function OnboardingPage() {
   const navigate = useNavigate()
   const messagesEndRef = useRef<HTMLDivElement>(null)
+  const hasStartedRef = useRef(false)
   const { messages, isLoading, conversationId, addMessage, setConversationId, setLoading } =
     useConversationStore()
 
@@ -17,19 +18,24 @@ export function OnboardingPage() {
   const sendMessage = useSendMessage()
   const completeOnboarding = useCompleteOnboarding()
 
+  const handleStartConversation = useCallback(() => {
+    startConversation.mutate('onboarding', {
+      onSuccess: (data) => {
+        setConversationId(data.id)
+        if (data.messages.length > 0) {
+          data.messages.forEach(addMessage)
+        }
+      },
+    })
+  }, [startConversation, setConversationId, addMessage])
+
   useEffect(() => {
     // Start onboarding conversation
-    if (!conversationId) {
-      startConversation.mutate('onboarding', {
-        onSuccess: (data) => {
-          setConversationId(data.id)
-          if (data.messages.length > 0) {
-            data.messages.forEach(addMessage)
-          }
-        },
-      })
+    if (!conversationId && !hasStartedRef.current) {
+      hasStartedRef.current = true
+      handleStartConversation()
     }
-  }, [])
+  }, [conversationId, handleStartConversation])
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
