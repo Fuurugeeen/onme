@@ -15,11 +15,7 @@ export function GoalSetupPrompt() {
         <p className="mt-2 text-sm text-muted-foreground">
           目標を設定すると、コーチングがより効果的になります
         </p>
-        <Button
-          className="mt-4 w-full"
-          variant="outline"
-          onClick={() => navigate('/goal-setup')}
-        >
+        <Button className="mt-4 w-full" variant="outline" onClick={() => navigate('/goal-setup')}>
           目標を設定する
         </Button>
       </CardContent>

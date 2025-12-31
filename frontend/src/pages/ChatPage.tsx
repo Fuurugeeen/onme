@@ -135,9 +135,7 @@ export function ChatPage() {
               )}
             </div>
           )}
-          {isInitializing && (
-            <p className="text-center text-muted-foreground">読み込み中...</p>
-          )}
+          {isInitializing && <p className="text-center text-muted-foreground">読み込み中...</p>}
           {messages.length === 0 && !isLoading && !isInitializing && !error && (
             <p className="text-center text-muted-foreground">
               コーチングを始めましょう。何でも話してください。

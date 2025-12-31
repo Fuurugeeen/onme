@@ -22,9 +22,7 @@ export function GoalCard({ title, progress, daysRemaining }: GoalCardProps) {
           </div>
         )}
         {daysRemaining !== undefined && (
-          <p className="mt-2 text-sm text-muted-foreground">
-            残り {daysRemaining}日
-          </p>
+          <p className="mt-2 text-sm text-muted-foreground">残り {daysRemaining}日</p>
         )}
       </CardContent>
     </Card>

@@ -6,9 +6,7 @@ interface CoachingCTAProps {
   message?: string
 }
 
-export function CoachingCTA({
-  message = '昨日の振り返りをしましょう',
-}: CoachingCTAProps) {
+export function CoachingCTA({ message = '昨日の振り返りをしましょう' }: CoachingCTAProps) {
   const navigate = useNavigate()
 
   return (

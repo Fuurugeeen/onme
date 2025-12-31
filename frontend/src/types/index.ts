@@ -1,15 +1,15 @@
 // User Profile Types
 export interface ThinkingStyle {
-  logical_intuitive: number       // 0=直感的 〜 1=論理的
-  decisive_deliberate: number     // 0=即決型 〜 1=熟考型
-  optimistic_cautious: number     // 0=楽観的 〜 1=慎重派
+  logical_intuitive: number // 0=直感的 〜 1=論理的
+  decisive_deliberate: number // 0=即決型 〜 1=熟考型
+  optimistic_cautious: number // 0=楽観的 〜 1=慎重派
 }
 
 export interface MotivationDrivers {
-  achievement: number    // 達成感
-  recognition: number    // 承認
-  growth: number         // 成長
-  stability: number      // 安定
+  achievement: number // 達成感
+  recognition: number // 承認
+  growth: number // 成長
+  stability: number // 安定
 }
 
 export interface StressResponse {
@@ -55,7 +55,7 @@ export interface DailyTask {
   category: TaskCategory
   date: string
   completed: boolean
-  perceived_load: number | null  // 1-5
+  perceived_load: number | null // 1-5
   completed_at: string | null
   created_at: string
 }
@@ -83,7 +83,7 @@ export interface ActionLog {
   user_id: string
   task_id: string
   executed: boolean
-  perceived_load: number  // 1-5
+  perceived_load: number // 1-5
   logged_at: string
 }
 

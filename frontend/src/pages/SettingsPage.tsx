@@ -50,9 +50,7 @@ export function SettingsPage() {
         </div>
         <Link to="/goal-setup">
           <Card className="p-4 flex items-center justify-between hover:bg-accent transition-colors">
-            <span className="text-sm">
-              {currentGoal?.title || '目標を設定する'}
-            </span>
+            <span className="text-sm">{currentGoal?.title || '目標を設定する'}</span>
             <ChevronRight className="h-4 w-4 text-muted-foreground" />
           </Card>
         </Link>
@@ -65,9 +63,7 @@ export function SettingsPage() {
           <span className="text-sm font-medium">過去の会話</span>
         </div>
         <Card className="p-4">
-          <span className="text-sm text-muted-foreground">
-            まだ会話がありません
-          </span>
+          <span className="text-sm text-muted-foreground">まだ会話がありません</span>
         </Card>
       </section>
 
@@ -78,9 +74,7 @@ export function SettingsPage() {
           <span className="text-sm font-medium">気づき一覧</span>
         </div>
         <Card className="p-4">
-          <span className="text-sm text-muted-foreground">
-            まだ気づきがありません
-          </span>
+          <span className="text-sm text-muted-foreground">まだ気づきがありません</span>
         </Card>
       </section>
 

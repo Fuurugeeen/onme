@@ -16,13 +16,7 @@ export const useCompleteTask = () => {
   const queryClient = useQueryClient()
 
   return useMutation({
-    mutationFn: async ({
-      taskId,
-      perceivedLoad,
-    }: {
-      taskId: string
-      perceivedLoad: number
-    }) => {
+    mutationFn: async ({ taskId, perceivedLoad }: { taskId: string; perceivedLoad: number }) => {
       const { data } = await api.post<DailyTask>(`/tasks/${taskId}/complete`, {
         perceived_load: perceivedLoad,
       })

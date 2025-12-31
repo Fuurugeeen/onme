@@ -32,9 +32,7 @@ export function GoalForm({ onSubmit, onSkip, isLoading, error }: GoalFormProps) 
     <Card className="mx-auto w-full max-w-md">
       <CardHeader>
         <CardTitle>目標を設定しよう</CardTitle>
-        <CardDescription>
-          達成したい目標を設定して、コーチと一緒に進めましょう
-        </CardDescription>
+        <CardDescription>達成したい目標を設定して、コーチと一緒に進めましょう</CardDescription>
       </CardHeader>
       <CardContent>
         {error && (

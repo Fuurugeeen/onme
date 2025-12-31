@@ -24,10 +24,7 @@ export function InsightsList({ insights }: InsightsListProps) {
         <CardContent className="p-4">
           <ul className="space-y-2">
             {insights.map((insight) => (
-              <li
-                key={insight.id}
-                className="flex items-start gap-2 text-sm text-muted-foreground"
-              >
+              <li key={insight.id} className="flex items-start gap-2 text-sm text-muted-foreground">
                 <span>•</span>
                 <span>{insight.text}</span>
               </li>

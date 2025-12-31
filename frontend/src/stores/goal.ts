@@ -23,9 +23,7 @@ export const useGoalStore = create<GoalState>()(
         }
         const updatedGoal = { ...goalToUpdate, ...update, updated_at: new Date().toISOString() }
         set((state) => ({
-          goals: state.goals.map((goal) =>
-            goal.id === id ? updatedGoal : goal
-          ),
+          goals: state.goals.map((goal) => (goal.id === id ? updatedGoal : goal)),
         }))
         return updatedGoal
       },

@@ -32,10 +32,7 @@ export function HomePage() {
   return (
     <div className="space-y-6 p-4">
       {currentGoal ? (
-        <GoalCard
-          title={currentGoal.title}
-          daysRemaining={daysRemaining ?? undefined}
-        />
+        <GoalCard title={currentGoal.title} daysRemaining={daysRemaining ?? undefined} />
       ) : (
         <GoalSetupPrompt />
       )}
