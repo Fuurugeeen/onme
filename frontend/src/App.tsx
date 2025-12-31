@@ -1,12 +1,13 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
 import { useAuthStore } from '@/stores/auth'
 import { AuthLayout } from '@/components/layouts/AuthLayout'
 import { AppLayout } from '@/components/layouts/AppLayout'
 import { LoginPage } from '@/pages/LoginPage'
 import { OnboardingPage } from '@/pages/OnboardingPage'
-import { DailyCoachPage } from '@/pages/DailyCoachPage'
-import { ProgressPage } from '@/pages/ProgressPage'
-import { ProfilePage } from '@/pages/ProfilePage'
+import { HomePage } from '@/pages/HomePage'
+import { ChatPage } from '@/pages/ChatPage'
+import { SettingsPage } from '@/pages/SettingsPage'
+import { GoalSetupPage } from '@/pages/GoalSetupPage'
 
 function PrivateRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuthStore()
@@ -38,11 +39,21 @@ export default function App() {
           </PrivateRoute>
         }
       >
-        <Route path="/" element={<Navigate to="/daily" replace />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/settings" element={<SettingsPage />} />
+      </Route>
+
+      {/* Private routes without bottom navigation */}
+      <Route
+        element={
+          <PrivateRoute>
+            <Outlet />
+          </PrivateRoute>
+        }
+      >
         <Route path="/onboarding" element={<OnboardingPage />} />
-        <Route path="/daily" element={<DailyCoachPage />} />
-        <Route path="/progress" element={<ProgressPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/goal-setup" element={<GoalSetupPage />} />
+        <Route path="/chat" element={<ChatPage />} />
       </Route>
     </Routes>
   )

@@ -1,5 +1,5 @@
 import { Outlet, NavLink } from 'react-router-dom'
-import { MessageCircle, BarChart2, User } from 'lucide-react'
+import { Home, Settings } from 'lucide-react'
 
 export function AppLayout() {
   return (
@@ -8,41 +8,31 @@ export function AppLayout() {
         <Outlet />
       </main>
 
-      {/* Bottom Navigation */}
+      {/* Bottom Navigation - 2タブ */}
       <nav className="fixed bottom-0 left-0 right-0 border-t bg-white">
         <div className="mx-auto flex max-w-md justify-around">
           <NavLink
-            to="/daily"
+            to="/"
+            end
             className={({ isActive }) =>
               `flex flex-col items-center px-4 py-3 text-sm ${
                 isActive ? 'text-primary' : 'text-muted-foreground'
               }`
             }
           >
-            <MessageCircle className="h-6 w-6" />
-            <span>Today</span>
+            <Home className="h-6 w-6" />
+            <span>ホーム</span>
           </NavLink>
           <NavLink
-            to="/progress"
+            to="/settings"
             className={({ isActive }) =>
               `flex flex-col items-center px-4 py-3 text-sm ${
                 isActive ? 'text-primary' : 'text-muted-foreground'
               }`
             }
           >
-            <BarChart2 className="h-6 w-6" />
-            <span>Progress</span>
-          </NavLink>
-          <NavLink
-            to="/profile"
-            className={({ isActive }) =>
-              `flex flex-col items-center px-4 py-3 text-sm ${
-                isActive ? 'text-primary' : 'text-muted-foreground'
-              }`
-            }
-          >
-            <User className="h-6 w-6" />
-            <span>Profile</span>
+            <Settings className="h-6 w-6" />
+            <span>設定</span>
           </NavLink>
         </div>
       </nav>
