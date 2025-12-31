@@ -51,3 +51,6 @@ credentials.json
 
 # Worktree parallel development
 .app_port
+
+# Generated files
+frontend/src/types/api.generated.ts
