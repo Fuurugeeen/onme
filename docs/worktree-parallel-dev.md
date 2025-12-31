@@ -36,16 +36,18 @@ UI リデザインを並列開発するための git worktree 構成
 
 ## 各ブランチの詳細タスク
 
-### 0. feature/base-layout（最初に完了）
+### 0. feature/base-layout（完了）
 
 **担当ファイル:**
-- [ ] `components/layouts/AppLayout.tsx` - 2タブに変更
-- [ ] `App.tsx` - ルーティング更新（スタブページで動作確認）
+- [x] `components/layouts/AppLayout.tsx` - 2タブに変更
+- [x] `App.tsx` - ルーティング更新（スタブページで動作確認）
 
 **完了条件:**
-- 2タブナビゲーションが動作
-- `/`, `/settings`, `/chat`, `/goal-setup` へのルーティングが設定済み
-- 各ページはスタブ（仮実装）でOK
+- [x] 2タブナビゲーションが動作
+- [x] `/`, `/settings`, `/chat`, `/goal-setup` へのルーティングが設定済み
+- [x] 各ページはスタブ（仮実装）でOK
+
+**コミット:** `8b1cd78` - feat: 2タブレイアウトとルーティング基盤
 
 ---
 
