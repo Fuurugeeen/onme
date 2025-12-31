@@ -48,3 +48,6 @@ firebase-adminsdk*.json
 *.pem
 *.key
 credentials.json
+
+# Worktree parallel development
+.app_port

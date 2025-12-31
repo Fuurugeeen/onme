@@ -1,9 +1,49 @@
-version: '3.8'
-
 services:
+  # ========================================
+  # Backend API
+  # ========================================
+  # Note: Run `make infra` first to start the database
+  backend:
+    build: ./backend
+    ports:
+      - "${BACKEND_PORT:-8080}:8080"
+    volumes:
+      - ./backend:/app
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/onme
+    networks:
+      - shared
+    profiles:
+      - app
+      - backend
+    # DB is started separately via `make infra`, so no depends_on here
+    restart: on-failure
+
+  # ========================================
+  # Frontend (dev server)
+  # ========================================
+  frontend:
+    image: node:20-alpine
+    working_dir: /app
+    ports:
+      - "${FRONTEND_PORT:-5173}:5173"
+    volumes:
+      - ./frontend:/app
+      - frontend_node_modules:/app/node_modules
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    environment:
+      - VITE_API_URL=http://localhost:${BACKEND_PORT:-8080}
+    networks:
+      - shared
+    profiles:
+      - app
+      - frontend
+
+  # ========================================
+  # Database (shared infrastructure)
+  # ========================================
   db:
     image: postgres:15
-    container_name: onme-db
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -17,6 +57,24 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - shared
+    profiles:
+      - infra
 
+# ========================================
+# Networks (external for cross-worktree communication)
+# ========================================
+networks:
+  shared:
+    external: true
+    name: onme-shared-network
+
+# ========================================
+# Volumes
+# ========================================
 volumes:
   postgres_data:
+    external: true
+    name: onme-postgres-data
+  frontend_node_modules:
