@@ -1,4 +1,4 @@
-import { Routes, Route, Outlet } from 'react-router-dom'
+import { Routes, Route, Outlet, Navigate } from 'react-router-dom'
 import { useAuthStore } from '@/stores/auth'
 import { AuthLayout } from '@/components/layouts/AuthLayout'
 import { AppLayout } from '@/components/layouts/AppLayout'
