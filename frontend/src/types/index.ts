@@ -99,6 +99,28 @@ export interface ProgressStats {
   }[]
 }
 
+// Goal Types
+export interface Goal {
+  id: string
+  title: string
+  description?: string
+  deadline?: string
+  created_at: string
+  updated_at: string
+}
+
+export interface GoalCreate {
+  title: string
+  description?: string
+  deadline?: string
+}
+
+export interface GoalUpdate {
+  title?: string
+  description?: string
+  deadline?: string
+}
+
 // API Response Types
 export interface ApiResponse<T> {
   data: T
