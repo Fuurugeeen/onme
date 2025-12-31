@@ -103,3 +103,61 @@
 - Prettier 初回実行で大量のファイル変更が発生する
 - ruff の初回実行で多数の警告が出る可能性（`--fix` で自動修正推奨）
 - OpenAPI 型生成はバックエンドサーバー起動が必要
+
+---
+
+## 実装進捗
+
+### 完了した項目
+
+| 項目 | 状態 | 備考 |
+|------|------|------|
+| 1. ruff 導入 | ✅ 完了 | `backend/requirements.txt`, `backend/pyproject.toml`, `Makefile` 更新 |
+| 2. Prettier + ESLint | ✅ 完了 | `.prettierrc`, `.prettierignore`, `.eslintrc.cjs` 作成・更新 |
+| 3. husky + lint-staged | ✅ 完了 | `.husky/pre-commit`, `.lintstagedrc.json` 作成 |
+| 4. Vitest + React Testing Library | ✅ 完了 | `vite.config.ts`, `tsconfig.json` 更新、サンプルテスト作成 |
+| 5. OpenAPI 型自動生成 | ✅ 完了 | `scripts/generate-types.sh` 作成 |
+| 6. CI 統合 | ✅ 完了 | `.github/workflows/ci.yml` 更新 |
+
+### 使用方法
+
+**フロントエンド:**
+```bash
+cd frontend
+npm install          # 依存関係インストール（husky も自動設定）
+npm run format       # Prettier でフォーマット
+npm run format:check # フォーマットチェック
+npm run test         # テスト実行（watch mode）
+npm run test:run     # テスト実行（1回のみ）
+npm run generate:types  # OpenAPI 型生成（バックエンド起動必須）
+```
+
+**バックエンド:**
+```bash
+make lint        # ruff でリントチェック
+make lint-fix    # ruff で自動修正
+make format      # ruff でフォーマット
+make format-check # フォーマットチェック
+```
+
+### 変更ファイル一覧
+
+**新規作成:**
+- `frontend/.prettierrc`
+- `frontend/.prettierignore`
+- `frontend/.lintstagedrc.json`
+- `.husky/pre-commit` (ルートディレクトリ)
+- `frontend/src/test/setup.ts`
+- `frontend/src/components/ui/Button.test.tsx`
+- `frontend/scripts/generate-types.sh`
+- `backend/pyproject.toml`
+
+**更新:**
+- `frontend/package.json`
+- `frontend/.eslintrc.cjs`
+- `frontend/vite.config.ts`
+- `frontend/tsconfig.json`
+- `backend/requirements.txt`
+- `Makefile`
+- `.github/workflows/ci.yml`
+- `.gitignore`

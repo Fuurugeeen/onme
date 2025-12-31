@@ -10,7 +10,8 @@
 #   make clean     - Clean up everything
 
 .PHONY: infra infra-down app app-down status logs logs-backend logs-frontend \
-        clean clean-all backend frontend shell-backend shell-db migrate help
+        clean clean-all backend frontend shell-backend shell-db migrate help \
+        lint lint-fix format format-check
 
 # ========================================
 # Configuration
@@ -338,6 +339,25 @@ migrate:
 	docker compose -p $$PROJECT_NAME exec backend alembic upgrade head
 
 # ========================================
+# Linting & Formatting (Backend)
+# ========================================
+lint:
+	@echo "=== Running ruff check ==="
+	cd backend && ruff check .
+
+lint-fix:
+	@echo "=== Running ruff check --fix ==="
+	cd backend && ruff check --fix .
+
+format:
+	@echo "=== Running ruff format ==="
+	cd backend && ruff format .
+
+format-check:
+	@echo "=== Checking ruff format ==="
+	cd backend && ruff format --check .
+
+# ========================================
 # Help
 # ========================================
 help:
@@ -359,6 +379,12 @@ help:
 	@echo "  make migrate       Run database migrations"
 	@echo "  make clean         Stop this worktree's app"
 	@echo "  make clean-all     Stop everything and remove volumes"
+	@echo ""
+	@echo "Linting (Backend):"
+	@echo "  make lint          Run ruff check"
+	@echo "  make lint-fix      Run ruff check --fix"
+	@echo "  make format        Run ruff format"
+	@echo "  make format-check  Check ruff format"
 	@echo ""
 	@echo "Workflow:"
 	@echo "  1. make infra      # Once, to start shared DB"
