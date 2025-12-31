@@ -3,7 +3,7 @@ import api from '@/lib/axios'
 import type { Message, Conversation } from '@/types'
 
 interface SendMessageParams {
-  conversationId?: string
+  conversationId?: string | null
   type: 'onboarding' | 'daily' | 'reflection'
   message: string
 }
