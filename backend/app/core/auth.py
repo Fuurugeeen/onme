@@ -9,7 +9,7 @@ security = HTTPBearer(auto_error=not settings.MOCK_MODE)
 # Initialize Firebase Admin only if not in mock mode
 if not settings.MOCK_MODE:
     import firebase_admin
-    from firebase_admin import credentials
+    from firebase_admin import auth, credentials
 
     if not firebase_admin._apps:
         if settings.GOOGLE_APPLICATION_CREDENTIALS:
@@ -50,8 +50,6 @@ async def get_current_user(
         )
 
     try:
-        from firebase_admin import auth
-
         token = credentials.credentials
         decoded_token = auth.verify_id_token(token)
         return {

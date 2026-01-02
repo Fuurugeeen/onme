@@ -4,10 +4,9 @@
 
 ## 実行方法
 
-Docker環境で実行:
+`backend` ディレクトリで以下のコマンドを実行:
 
 ```bash
-cd /Users/furugen/dev/ai-hackathon/lint-issues/backend
 docker run --rm -v $(pwd):/app -w /app python:3.11-slim sh -c "pip install -q ruff && ruff check . && ruff format --check ."
 ```
 
