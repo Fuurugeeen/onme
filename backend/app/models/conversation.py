@@ -1,9 +1,10 @@
-from sqlalchemy import Column, String, DateTime, ForeignKey, Enum, Text
+import enum
+import uuid
+
+from sqlalchemy import Column, DateTime, Enum, ForeignKey, Text
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-import uuid
-import enum
 
 from app.core.database import Base
 
@@ -30,14 +31,18 @@ class Conversation(Base):
 
     # Relationships
     user = relationship("User", back_populates="conversations")
-    messages = relationship("Message", back_populates="conversation", order_by="Message.created_at")
+    messages = relationship(
+        "Message", back_populates="conversation", order_by="Message.created_at"
+    )
 
 
 class Message(Base):
     __tablename__ = "messages"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
-    conversation_id = Column(UUID(as_uuid=True), ForeignKey("conversations.id"), nullable=False)
+    conversation_id = Column(
+        UUID(as_uuid=True), ForeignKey("conversations.id"), nullable=False
+    )
     role = Column(Enum(MessageRole), nullable=False)
     content = Column(Text, nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())

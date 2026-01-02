@@ -1,23 +1,24 @@
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.ext.asyncio import AsyncSession
 from uuid import UUID
 
-from app.core.database import get_db
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.core.auth import get_current_user
-from app.services import (
-    UserService,
-    ProfileService,
-    ConversationService,
-    TaskService,
-    GeminiService,
-)
+from app.core.database import get_db
 from app.models.conversation import ConversationType, MessageRole
 from app.schemas.conversation import (
     ConversationCreate,
     ConversationResponse,
+    MessageResponse,
     SendMessageRequest,
     SendMessageResponse,
-    MessageResponse,
+)
+from app.services import (
+    ConversationService,
+    GeminiService,
+    ProfileService,
+    TaskService,
+    UserService,
 )
 
 router = APIRouter()
@@ -58,9 +59,7 @@ async def start_conversation(
     }
 
     if data.type.value == "onboarding":
-        greeting = await gemini_service.generate_onboarding_response(
-            [], profile_dict
-        )
+        greeting = await gemini_service.generate_onboarding_response([], profile_dict)
     else:
         # Get today's task for daily coaching
         task_service = TaskService(db)
@@ -78,7 +77,7 @@ async def start_conversation(
         )
 
     # Add greeting message
-    message = await conversation_service.add_message(
+    await conversation_service.add_message(
         conversation.id, MessageRole.ASSISTANT, greeting
     )
 

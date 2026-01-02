@@ -1,9 +1,19 @@
-from sqlalchemy import Column, String, DateTime, Boolean, Integer, ForeignKey, Enum, Date
+import enum
+import uuid
+
+from sqlalchemy import (
+    Boolean,
+    Column,
+    Date,
+    DateTime,
+    Enum,
+    ForeignKey,
+    Integer,
+    String,
+)
 from sqlalchemy.dialects.postgresql import UUID
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
-import uuid
-import enum
 
 from app.core.database import Base
 
@@ -17,6 +27,7 @@ class TaskCategory(str, enum.Enum):
 
 class DailyTask(Base):
     """Daily task assigned to user."""
+
     __tablename__ = "daily_tasks"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -35,6 +46,7 @@ class DailyTask(Base):
 
 class ActionLog(Base):
     """Log of user actions for analysis."""
+
     __tablename__ = "action_logs"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

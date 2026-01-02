@@ -1,8 +1,8 @@
-from pydantic import BaseModel
 from datetime import datetime
-from uuid import UUID
-from typing import List, Optional
 from enum import Enum
+from uuid import UUID
+
+from pydantic import BaseModel
 
 
 class ConversationType(str, Enum):
@@ -39,16 +39,16 @@ class ConversationResponse(BaseModel):
     id: UUID
     user_id: UUID
     type: ConversationType
-    messages: List[MessageResponse]
+    messages: list[MessageResponse]
     created_at: datetime
-    ended_at: Optional[datetime]
+    ended_at: datetime | None
 
     class Config:
         from_attributes = True
 
 
 class SendMessageRequest(BaseModel):
-    conversation_id: Optional[UUID] = None
+    conversation_id: UUID | None = None
     type: ConversationType
     message: str
 

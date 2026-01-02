@@ -1,13 +1,3 @@
-from app.schemas.user import UserCreate, UserResponse
-from app.schemas.profile import (
-    UserProfileResponse,
-    UserProfileUpdate,
-    ThinkingStyle,
-    MotivationDrivers,
-    StressResponse,
-    BehavioralPatterns,
-    ConversationInsight,
-)
 from app.schemas.conversation import (
     ConversationCreate,
     ConversationResponse,
@@ -16,12 +6,22 @@ from app.schemas.conversation import (
     SendMessageRequest,
     SendMessageResponse,
 )
+from app.schemas.profile import (
+    BehavioralPatterns,
+    ConversationInsight,
+    MotivationDrivers,
+    StressResponse,
+    ThinkingStyle,
+    UserProfileResponse,
+    UserProfileUpdate,
+)
 from app.schemas.task import (
     DailyTaskResponse,
-    TaskCompleteRequest,
     ProgressStatsResponse,
+    TaskCompleteRequest,
     WeeklyStat,
 )
+from app.schemas.user import UserCreate, UserResponse
 
 __all__ = [
     "UserCreate",

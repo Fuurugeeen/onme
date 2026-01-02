@@ -1,8 +1,8 @@
-from app.services.user_service import UserService
-from app.services.profile_service import ProfileService
-from app.services.conversation_service import ConversationService
-from app.services.task_service import TaskService
 from app.core.config import settings
+from app.services.conversation_service import ConversationService
+from app.services.profile_service import ProfileService
+from app.services.task_service import TaskService
+from app.services.user_service import UserService
 
 # Use mock service in mock mode
 if settings.MOCK_MODE:

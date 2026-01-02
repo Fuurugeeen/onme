@@ -1,6 +1,7 @@
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
 from uuid import UUID
+
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.models.user_profile import UserProfile
 from app.schemas.profile import UserProfileUpdate
@@ -56,11 +57,13 @@ class ProfileService:
         profile = await self.get_by_user_id(user_id)
         if profile:
             insights = list(profile.conversation_insights or [])
-            insights.append({
-                "date": date.today().isoformat(),
-                "insight": insight,
-                "context": context,
-            })
+            insights.append(
+                {
+                    "date": date.today().isoformat(),
+                    "insight": insight,
+                    "context": context,
+                }
+            )
             # Keep only last 50 insights
             profile.conversation_insights = insights[-50:]
             await self.db.commit()

@@ -1,20 +1,21 @@
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.ext.asyncio import AsyncSession
 from uuid import UUID
 
-from app.core.database import get_db
+from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy.ext.asyncio import AsyncSession
+
 from app.core.auth import get_current_user
-from app.services import (
-    UserService,
-    ProfileService,
-    TaskService,
-    GeminiService,
-)
+from app.core.database import get_db
 from app.models.task import TaskCategory
 from app.schemas.task import (
     DailyTaskResponse,
-    TaskCompleteRequest,
     ProgressStatsResponse,
+    TaskCompleteRequest,
+)
+from app.services import (
+    GeminiService,
+    ProfileService,
+    TaskService,
+    UserService,
 )
 
 router = APIRouter()
@@ -56,15 +57,12 @@ async def get_today_task(
             TaskCategory.SELF_EXPLORATION,
         ]
         from datetime import date
+
         category = categories[date.today().day % len(categories)]
 
-        task_content = await gemini_service.generate_task(
-            profile_dict, category.value
-        )
+        task_content = await gemini_service.generate_task(profile_dict, category.value)
 
-        task = await task_service.create_task(
-            user.id, task_content, category
-        )
+        task = await task_service.create_task(user.id, task_content, category)
 
     return task
 

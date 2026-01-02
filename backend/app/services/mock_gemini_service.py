@@ -1,6 +1,6 @@
 """Mock Gemini service for development without API keys."""
+
 import random
-from typing import Optional
 
 
 class MockGeminiService:
@@ -79,10 +79,12 @@ class MockGeminiService:
         self,
         conversation_history: list[dict],
         user_profile: dict,
-        today_task: Optional[dict],
+        today_task: dict | None,
     ) -> str:
         """Generate mock response for daily coaching conversation."""
-        task_content = today_task.get("content", "今日のタスク") if today_task else "今日のタスク"
+        task_content = (
+            today_task.get("content", "今日のタスク") if today_task else "今日のタスク"
+        )
 
         response = self.DAILY_RESPONSES[
             min(self._daily_index, len(self.DAILY_RESPONSES) - 1)

@@ -1,10 +1,11 @@
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
-from sqlalchemy.orm import selectinload
-from uuid import UUID
 from datetime import datetime
+from uuid import UUID
 
-from app.models.conversation import Conversation, Message, ConversationType, MessageRole
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import selectinload
+
+from app.models.conversation import Conversation, ConversationType, Message, MessageRole
 
 
 class ConversationService:
