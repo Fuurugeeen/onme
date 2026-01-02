@@ -1,8 +1,8 @@
-from pydantic import BaseModel
-from datetime import datetime, date
-from uuid import UUID
-from typing import List, Optional
+from datetime import date, datetime
 from enum import Enum
+from uuid import UUID
+
+from pydantic import BaseModel
 
 
 class TaskCategory(str, Enum):
@@ -19,8 +19,8 @@ class DailyTaskResponse(BaseModel):
     category: TaskCategory
     date: date
     completed: bool
-    perceived_load: Optional[int]
-    completed_at: Optional[datetime]
+    perceived_load: int | None
+    completed_at: datetime | None
     created_at: datetime
 
     class Config:
@@ -41,4 +41,4 @@ class ProgressStatsResponse(BaseModel):
     streak_days: int
     total_completed: int
     completion_rate: float
-    weekly_stats: List[WeeklyStat]
+    weekly_stats: list[WeeklyStat]

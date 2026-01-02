@@ -1,7 +1,7 @@
-from pydantic import BaseModel
 from datetime import datetime
 from uuid import UUID
-from typing import List, Optional
+
+from pydantic import BaseModel
 
 
 class ThinkingStyle(BaseModel):
@@ -19,8 +19,8 @@ class MotivationDrivers(BaseModel):
 
 class StressResponse(BaseModel):
     pattern: str = "neutral"  # avoidant/confronting/seeking_help/neutral
-    triggers: List[str] = []
-    coping: List[str] = []
+    triggers: list[str] = []
+    coping: list[str] = []
 
 
 class BehavioralPatterns(BaseModel):
@@ -42,10 +42,10 @@ class UserProfileResponse(BaseModel):
     motivation_drivers: MotivationDrivers | dict
     stress_response: StressResponse | dict
     behavioral_patterns: BehavioralPatterns | dict
-    values: List[str]
-    strengths_discovered: List[str]
-    growth_areas: List[str]
-    conversation_insights: List[ConversationInsight] | List[dict]
+    values: list[str]
+    strengths_discovered: list[str]
+    growth_areas: list[str]
+    conversation_insights: list[ConversationInsight] | list[dict]
     onboarding_completed: bool
     created_at: datetime
     updated_at: datetime
@@ -55,10 +55,10 @@ class UserProfileResponse(BaseModel):
 
 
 class UserProfileUpdate(BaseModel):
-    thinking_style: Optional[ThinkingStyle] = None
-    motivation_drivers: Optional[MotivationDrivers] = None
-    stress_response: Optional[StressResponse] = None
-    behavioral_patterns: Optional[BehavioralPatterns] = None
-    values: Optional[List[str]] = None
-    strengths_discovered: Optional[List[str]] = None
-    growth_areas: Optional[List[str]] = None
+    thinking_style: ThinkingStyle | None = None
+    motivation_drivers: MotivationDrivers | None = None
+    stress_response: StressResponse | None = None
+    behavioral_patterns: BehavioralPatterns | None = None
+    values: list[str] | None = None
+    strengths_discovered: list[str] | None = None
+    growth_areas: list[str] | None = None

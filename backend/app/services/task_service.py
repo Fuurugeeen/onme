@@ -1,9 +1,10 @@
-from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select, func
-from uuid import UUID
 from datetime import date, datetime, timedelta
+from uuid import UUID
 
-from app.models.task import DailyTask, ActionLog, TaskCategory
+from sqlalchemy import func, select
+from sqlalchemy.ext.asyncio import AsyncSession
+
+from app.models.task import ActionLog, DailyTask, TaskCategory
 
 
 class TaskService:
@@ -43,9 +44,7 @@ class TaskService:
         task_id: UUID,
         perceived_load: int,
     ) -> DailyTask | None:
-        result = await self.db.execute(
-            select(DailyTask).where(DailyTask.id == task_id)
-        )
+        result = await self.db.execute(select(DailyTask).where(DailyTask.id == task_id))
         task = result.scalar_one_or_none()
 
         if task:
@@ -68,9 +67,7 @@ class TaskService:
         return task
 
     async def skip_task(self, task_id: UUID) -> DailyTask | None:
-        result = await self.db.execute(
-            select(DailyTask).where(DailyTask.id == task_id)
-        )
+        result = await self.db.execute(select(DailyTask).where(DailyTask.id == task_id))
         task = result.scalar_one_or_none()
 
         if task:
@@ -96,7 +93,7 @@ class TaskService:
                 select(DailyTask).where(
                     DailyTask.user_id == user_id,
                     DailyTask.date == check_date,
-                    DailyTask.completed == True,
+                    DailyTask.completed.is_(True),
                 )
             )
             task = result.scalar_one_or_none()
@@ -119,7 +116,7 @@ class TaskService:
         result = await self.db.execute(
             select(func.count(DailyTask.id)).where(
                 DailyTask.user_id == user_id,
-                DailyTask.completed == True,
+                DailyTask.completed.is_(True),
             )
         )
         total_completed = result.scalar() or 0
@@ -156,10 +153,12 @@ class TaskService:
             completed = sum(1 for t in tasks if t.completed)
             total = len(tasks)
 
-            stats.append({
-                "date": check_date.isoformat(),
-                "completed": completed,
-                "total": total if total > 0 else 1,  # Avoid division issues
-            })
+            stats.append(
+                {
+                    "date": check_date.isoformat(),
+                    "completed": completed,
+                    "total": total if total > 0 else 1,  # Avoid division issues
+                }
+            )
 
         return stats

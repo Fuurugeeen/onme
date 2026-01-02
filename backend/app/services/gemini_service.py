@@ -1,6 +1,6 @@
-import google.generativeai as genai
 import json
-from typing import Optional
+
+import google.generativeai as genai
 
 from app.core.config import settings
 
@@ -41,7 +41,7 @@ class GeminiService:
         self,
         conversation_history: list[dict],
         user_profile: dict,
-        today_task: Optional[dict],
+        today_task: dict | None,
     ) -> str:
         """Generate response for daily coaching conversation."""
         system_prompt = f"""あなたは学生向けのAIコーチです。

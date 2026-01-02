@@ -1,6 +1,5 @@
 from fastapi import Depends, HTTPException, status
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from typing import Optional
+from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from app.core.config import settings
 
@@ -10,7 +9,7 @@ security = HTTPBearer(auto_error=not settings.MOCK_MODE)
 # Initialize Firebase Admin only if not in mock mode
 if not settings.MOCK_MODE:
     import firebase_admin
-    from firebase_admin import auth, credentials
+    from firebase_admin import credentials
 
     if not firebase_admin._apps:
         if settings.GOOGLE_APPLICATION_CREDENTIALS:
@@ -21,7 +20,7 @@ if not settings.MOCK_MODE:
 
 
 async def get_current_user(
-    credentials: Optional[HTTPAuthorizationCredentials] = Depends(security),
+    credentials: HTTPAuthorizationCredentials | None = Depends(security),
 ) -> dict:
     """Verify Firebase ID token and return user info."""
 
@@ -31,7 +30,11 @@ async def get_current_user(
         mock_uid = "mock-user-001"
         if credentials and credentials.credentials:
             # Use token as mock user ID if provided
-            mock_uid = credentials.credentials if credentials.credentials != "mock" else mock_uid
+            mock_uid = (
+                credentials.credentials
+                if credentials.credentials != "mock"
+                else mock_uid
+            )
 
         return {
             "uid": mock_uid,
@@ -60,4 +63,4 @@ async def get_current_user(
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail=f"Invalid authentication credentials: {str(e)}",
-        )
+        ) from e
