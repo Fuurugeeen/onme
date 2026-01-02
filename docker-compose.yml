@@ -10,7 +10,7 @@ services:
     volumes:
       - ./backend:/app
     environment:
-      - DATABASE_URL=postgresql://postgres:postgres@db:5432/onme
+      - DATABASE_URL=postgresql+asyncpg://postgres:postgres@db:5432/onme
     networks:
       - shared
     profiles:
